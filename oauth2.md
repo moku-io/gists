@@ -1,6 +1,6 @@
 # OAuth2
 
-Let's say a user holds an identity with a cartain Identity Provider (Google, Facebook, ecc) and wants to authorize aour App to use that identity. The App is split between a Client (a Frontend, a mobile app, or even a bunch of loose pages exposed by the Backend directly) and a Server.
+Let's say a user holds an identity with a cartain Identity Provider (Google, Facebook, ecc) and wants to authorize our App to use that identity. The App is split between a Client (a Frontend, a mobile app, or even a bunch of loose pages exposed by the Backend directly) and a Server.
 
 We will use `s` and `ip` as placeholders for the URL of, respectively, the Server and the Identity Provider.
 
