@@ -7,34 +7,6 @@ We will use `s` and `ip` as placeholders for the URL of, respectively, the Serve
 - The Server needs to expose some way (e.g. and endpoint `s/auth`, or a GraphQL query) to get the OAuth2 URL. Most Identity Providers provide libraries to compose this URL automatically.
 - The Server needs to expose some callback endpoint (e.g. `s/tokens`) through which to receive the tokens from the Identity Provider.
 
-```mermaid
----
-config:
-  sequence:
-    mirrorActors: false
----
-sequenceDiagram
-  box App
-    participant C as Client
-    participant S as Server
-  end
-  participant IP as Identity<br/>Provider
-  C ->> S: GET s/auth
-  S ->> C: ip/oauth?redirect_uri="s/tokens"
-  C ->> IP: GET ip/oauth?redirect_uri="s/tokens"
-  opt Authentication
-    Note right of IP: If needed, the Identity Provider will<br/>direct the user to the authentication<br/>flow.
-  end
-  IP ->> C: 3XX Location: s/tokens?code="..."
-  C ->> S: GET s/tokens?code="..."
-  S ->> IP: Generate<br/>tokens<br/>code="..."
-  alt
-    IP ->> S: Tokens
-    S ->> C: Success
-  else
-    IP ->> S: Error
-    S ->> C: Error
-  end
-```
+[![](https://mermaid.ink/img/pako:eNqNU11LKzEQ_StDnvvxcN-Ct1J6RQoqhfVBLgsSk9k2uJvZO8nqFfG_m492WxXBpyRnzsnMmUxehSaDQorpdFo7Ta6xW1k7AI__BnQa8wGgs8zESx2IvYRGtR5rlzUH4h-rtqy6RH-g_7Ds-6LsFQerba9cgBUoD6vWogtfg1UKVshPyCmIzqTllLHeJMraRLkNL2cPPF9smJ6sKYoVTBcLqCRcXtyCn6sh7BJcZXglwfZzSuA5o7GMOtwPbH_Xws8DPaLztTjest6Ua36moT7AMrJSYVoFS67Yu6GAwHa7C0BNvnPdgEM0aCYQ6aMXOPiAZ9u22VlJl1mDj4FAea8-pMnMpqXn2UnLYpv2jn_d3cEVFaqEQ83n6cmjh9lsdmp5bNw3rOrYGHTIKmDOXth5-1mh2v0z7yuKGW5L1zI6Pkw1aI0-o5gH66PmIo3eJ8mIRc9iIjrkTlkT5_g1gbWITeqwFjJujeLHVM9b5MXuUfXitJCBB5wIpmG7EzLP80QMvYmu9oM8onH0_hIdz3EQ4i-4Lt-m_Bjx9g53EBGJ?type=png)](https://mermaid.live/edit#pako:eNqNU11LKzEQ_StDnvvxcN-Ct1J6RQoqhfVBLgsSk9k2uJvZO8nqFfG_m492WxXBpyRnzsnMmUxehSaDQorpdFo7Ta6xW1k7AI__BnQa8wGgs8zESx2IvYRGtR5rlzUH4h-rtqy6RH-g_7Ds-6LsFQerba9cgBUoD6vWogtfg1UKVshPyCmIzqTllLHeJMraRLkNL2cPPF9smJ6sKYoVTBcLqCRcXtyCn6sh7BJcZXglwfZzSuA5o7GMOtwPbH_Xws8DPaLztTjest6Ua36moT7AMrJSYVoFS67Yu6GAwHa7C0BNvnPdgEM0aCYQ6aMXOPiAZ9u22VlJl1mDj4FAea8-pMnMpqXn2UnLYpv2jn_d3cEVFaqEQ83n6cmjh9lsdmp5bNw3rOrYGHTIKmDOXth5-1mh2v0z7yuKGW5L1zI6Pkw1aI0-o5gH66PmIo3eJ8mIRc9iIjrkTlkT5_g1gbWITeqwFjJujeLHVM9b5MXuUfXitJCBB5wIpmG7EzLP80QMvYmu9oM8onH0_hIdz3EQ4i-4Lt-m_Bjx9g53EBGJ)
 
 The Success/Error can be as simple as a static page hosted by the Server. For a better user experience you can *cleverly* use redirects and some state saved locally on the Client to make the flow end up directly on the page the user meant to reach.
